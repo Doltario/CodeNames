@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const word = wordsList[Math.floor(Math.random() * wordsList.length)];
         const writtenCase = null;
 
-        var r = Math.random();
+        let r = Math.random();
         if (r < 0.20 && redToWrite > 0) {
             _writeCase(word, colorsMap.red);
             redToWrite--;
@@ -38,19 +38,44 @@ document.addEventListener('DOMContentLoaded', () => {
             _writeCase(word, colorsMap.blue);
             blueToWrite--;
         } else if (r < 0.6 && blackToWrite > 0) {
-            _writeCase(word, null);
-            blackToWrite--;
-        } else if (r < 0.9) {
             _writeCase(word, colorsMap.black);
+            blackToWrite--;
+        } else {
+            _writeCase(word, null);
         }
     }
 
     const wordsContainer = document.querySelector('word-list');
 
     for (let i = 0; i < gridLimit; i++) {
-        console.log(i);
-        
         writeCase();
     }
+
+    _fillGrid = () => {
+        grid.forEach( (caseItem, index) => {
+            if (caseItem.color == null) {
+                let r = Math.random();
+                if (r < 0.20 && redToWrite > 0) {
+                    grid[index].color = colorsMap.red;
+                    redToWrite--;
+                } else if (r < 0.4 && blueToWrite > 0) {
+                    grid[index].color = colorsMap.blue;
+                    blueToWrite--;
+                } else if (r < 0.6 && blackToWrite > 0) {
+                    grid[index].color = colorsMap.black;
+                    blackToWrite--;
+                }
+            }
+        })
+    }
+
+    fillGrid = () => { // to fill grid with color if there are too few blue or red
+        while (redToWrite > 0 || blueToWrite > 0 || blackToWrite > 0) {
+            _fillGrid();
+        }
+    }
+
+    fillGrid();
+
     console.log(grid);
 });
