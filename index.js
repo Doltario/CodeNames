@@ -7,19 +7,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let blueToWrite = cardNumber;
     let blackToWrite = 1;
 
-    const wordsList = [
-        'zrg',
-        'ergojk',
-    ];
+    var wordsList = [];
 
     const colorsMap = { black : 'black', red: 'red', blue: 'blue'};
 
     const grid = []; // { value: Word, color: Blue, Red, Black}
 
     fillWords = () => {
-        //call api
-        // fill wordsList
+        const url = "http://localhost:3000/words"
+        fetch(url) // Call the fetch function passing the url of the API as a parameter
+        .then((resp) => resp.json())
+            .then(function(data) {
+                wordsList = data.words
+                console.log(wordsList)
+            })
+        .catch(function(error) {
+            console.log(error)
+        });
     }
+
+    fillWords()
 
     _writeCase = (word, color) => {
         const caseItem = { color: color, word : word };

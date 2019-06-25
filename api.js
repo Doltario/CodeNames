@@ -11,6 +11,7 @@ var app = express();
 var router = express.Router(); 
  
 router.route('/words').get( function( req, res ) { 
+    res.setHeader('Access-Control-Allow-Origin', '*');
     var allWords = [],
         length = words.length
     
