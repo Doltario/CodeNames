@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let blueToWrite = cardNumber;
     let blackToWrite = 1;
 
+    let wordIndex = 0;
+
     const wordsList = [
         'zrg',
         'ergojk',
@@ -27,8 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     writeCase = () => {
-        const word = wordsList[Math.floor(Math.random() * wordsList.length)];
-        const writtenCase = null;
+
+        const word = wordsList[wordIndex];
+        wordIndex++;
 
         let r = Math.random();
         if (r < 0.20 && redToWrite > 0) {
