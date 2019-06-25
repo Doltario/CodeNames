@@ -45,8 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const wordsContainer = document.querySelector('word-list');
-
     for (let i = 0; i < gridLimit; i++) {
         writeCase();
     }
@@ -78,4 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
     fillGrid();
 
     console.log(grid);
+
+    const wordsContainer = document.querySelector('.word-list');
+
+    for (let i = 0; i < grid.length; i++) {
+        const gridItem = grid[i];
+        wordsContainer.innerHTML = `<div class="word-card"> ${gridItem.word} </div>` + wordsContainer.innerHTML
+    }
+    
 });
