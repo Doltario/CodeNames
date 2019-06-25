@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
             blackToWrite--;
         } else if (r < 0.9) {
             _writeCase(word, colorsMap.black);
+        } else {
+            _writeCase(word, null);
         }
     }
 
