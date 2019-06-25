@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'Gill Sans';
+    src: url('./fonts/GillSansUltraBold.ttf');
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.word-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 40px;
+}
+
+.word-card {
+    font-family: 'Gill Sans', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #F9543E;
+    background-color: #FFEDED;
+    width: calc(20% - 20px);
+    text-align: center;
+    padding: 50px 0;
+    border-radius : 10px;
+    margin: 10px;
+}
+
+.spacer {
+    width: 30%;
+}

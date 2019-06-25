@@ -34,8 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     writeCase = () => {
-        const word = wordsList[Math.floor(Math.random() * wordsList.length)];
-        const writtenCase = null;
+
+        const word = wordsList[wordIndex];
+        wordIndex++;
 
         let r = Math.random();
         if (r < 0.20 && redToWrite > 0) {
@@ -51,8 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
             _writeCase(word, null);
         }
     }
-
-    const wordsContainer = document.querySelector('word-list');
 
     for (let i = 0; i < gridLimit; i++) {
         writeCase();
@@ -85,4 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
     fillGrid();
 
     console.log(grid);
+
+    const wordsContainer = document.querySelector('.word-list');
+
+    for (let i = 0; i < grid.length; i++) {
+        const gridItem = grid[i];
+        wordsContainer.innerHTML = `<div class="word-card"> ${gridItem.word} </div>` + wordsContainer.innerHTML
+    }
+    
 });
