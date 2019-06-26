@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Gill Sans';
-    src: url('./fonts/GillSansUltraBold.ttf');
+    src: url('/fonts/GillSansUltraBold.ttf');
 }
 
 * {

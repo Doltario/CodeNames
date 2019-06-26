@@ -1,15 +1,20 @@
 const express = require('express')
-const words = require("an-array-of-french-words")
+const words = require("./words.json")
+const path = require("path")
  
-var hostname = 'localhost'; 
-var port = 3000; 
+var hostname = process.env.DOMAIN_NAME || 'localhost'; 
+var port = process.env.PORT || 3000; 
  
-var app = express(); 
-
 var app = express(); 
 
 var router = express.Router(); 
+
+// Application routes
+router.route('/').get( function( req, res ) { 
+    res.sendFile(path.join(__dirname + '/index.html'));
+})
  
+// API routes
 router.route('/words').get( function( req, res ) { 
     res.setHeader('Access-Control-Allow-Origin', '*');
     var allWords = [],
@@ -22,6 +27,7 @@ router.route('/words').get( function( req, res ) {
 })
 
 app.use(router)
+app.use(express.static('public'))
 
 app.listen(port, hostname, function(){
 	console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port+"\n"); 

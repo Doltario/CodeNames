@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } 
 
     fillWords = () => {
-        const url = "http://localhost:3000/words"
+        const url = window.location + "words"
         fetch(url) // Call the fetch function passing the url of the API as a parameter
         .then((resp) => resp.json())
             .then(function(data) {
