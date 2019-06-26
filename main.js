@@ -1,7 +1,8 @@
 const express = require('express')
-const words = require("./words.json")
-const path = require("path")
- 
+const path = require('path')
+
+const db = require('./db');
+
 var hostname = 'localhost'; 
 var port = process.env.PORT || 3000; 
  
@@ -10,25 +11,17 @@ var app = express();
 var router = express.Router(); 
 
 // Application routes
-router.route('/').get( function( req, res ) { 
-    res.sendFile(path.join(__dirname + '/index.html'));
-})
+router.route('/game').get(require('./routes/game'))
  
 // API routes
-router.route('/words').get( function( req, res ) { 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    var allWords = [],
-        length = words.length
-    
-    for (let index = 0; index < 25; index++) {
-        allWords.push(words[Math.trunc(Math.random() * (length - 0) + 0)]); 
-    }
-	res.json({words : allWords});
-})
+router.route('/create').get(require('./routes/create'))
 
 app.use(router)
 app.use(express.static('public'))
+app.set('view engine', 'pug')
 
-app.listen(port, function(){
-	console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port+"\n"); 
+db.connectDb().then(async () => {
+    app.listen(port, () =>
+        console.log(`App listening on port ${port}!`),
+    );
 });
