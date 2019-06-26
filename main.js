@@ -2,7 +2,7 @@ const express = require('express')
 const words = require("./words.json")
 const path = require("path")
  
-var hostname = process.env.DOMAIN_NAME || 'localhost'; 
+var hostname = 'localhost'; 
 var port = process.env.PORT || 3000; 
  
 var app = express(); 
@@ -29,6 +29,6 @@ router.route('/words').get( function( req, res ) {
 app.use(router)
 app.use(express.static('public'))
 
-app.listen(port, hostname, function(){
+app.listen(port, function(){
 	console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port+"\n"); 
 });
