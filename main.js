@@ -11,7 +11,10 @@ var app = express();
 var router = express.Router(); 
 
 // Application routes
-router.route('/game').get(require('./routes/game'))
+router.route('/game/:token').get(require('./routes/game'))
+router.route('/').get((req, res) => {
+    res.render('home')
+})
  
 // API routes
 router.route('/create').get(require('./routes/create'))

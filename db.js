@@ -10,8 +10,7 @@ var Schema = mongoose.Schema
 
 var gameModelSchema = new Schema({
     token: Number,
-    words: [String],
-    pattern: [String],
+    grid: [ { color: String, word: String } ],
     visible: [Number]
 })
 
