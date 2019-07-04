@@ -35,6 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('update tab', function (data) {
         cards[data.id].style.backgroundColor = data.color
         cards[data.id].style.color = "#FFEDED";
+        if (window.location.href.includes("spy")) {
+            cards[data.id].textContent = "*" + cards[data.id].textContent + "*"
+        }
     })
    
 });
