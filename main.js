@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+var bodyParser = require('body-parser')
 
 const db = require('./db')
 var app = express()
@@ -11,20 +12,37 @@ var port = process.env.PORT || 3000;
 
 var router = express.Router(); 
 
+app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 // Application routes
-router.route('/game/:token').get(require('./routes/game'))
-router.route('/game/:token/admin').get(require('./routes/game'))
-router.route('/game/:token/spy').get(require('./routes/game'))
 router.route('/').get((req, res) => {
     res.render('home')
 })
+router.route('/game/:token').get(require('./routes/game'))
+router.route('/game/:token/admin').get(require('./routes/game'))
+router.route('/game/:token/spy').get(require('./routes/game'))
 
 // A changer
 app.post("/", (req, res) => {
-    console.log(req.body)
-    // if(req.body.perso == "admin"){
-    //     res.redirect('/create');
-    // }
+    switch (req.body.perso) {
+        case "admin":
+            if (req.body.token !== '') {
+                res.redirect('/game/'+ req.body.token +'/admin')
+            } else {
+                res.redirect('/create')
+            }
+            break;
+        case "spy":
+            res.redirect('/game/'+ req.body.token +'/spy')
+            break;
+        case "agent":
+            res.redirect('/game/'+ req.body.token)
+            break;
+        default:
+            break;
+    }
     // res.render('home')
 })
  
@@ -32,10 +50,9 @@ app.post("/", (req, res) => {
 router.route('/create').get(require('./routes/create'))
 
 app.use(router)
-app.use(express.static('public'))
-app.use(express.urlencoded())
 app.set('view engine', 'pug')
 
+// Socket
 io.on('connection', function(socket) {
 
     socket.on('begin', function (room) {

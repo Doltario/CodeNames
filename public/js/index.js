@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cards = document.querySelectorAll('.word-card');
 
+    document.querySelector('#token').textContent = token
+
     var socket = io()
 
     socket.emit('begin', token)
