@@ -8,6 +8,18 @@ head
 body
     main
         h1 Commencer une nouvelle partie !
+        //- form(action = "/", method = "POST")
+        //-     div
+        //-         label(for = "token") ID :
+        //-         input(name="token")
+        //-     div
+        //-         label(for="perso") Poste :
+        //-         select(name="perso")
+        //-             option(value="admin") Admin
+        //-             option(value="spy") Espion
+        //-             option(value="agent") Agent
+        //-     br
+        //-     button(type="submit") GO !
     //- script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js")
     //- script. 
     //-     var socket = io();

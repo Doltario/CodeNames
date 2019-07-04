@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.emit('begin', token)
 
-    if (window.location.href.includes("admin")) {
+    if (window.location.href.includes("admin") || window.location.href.includes("spy")) {
        for (let i = 0; i < cards.length; i++) {
             cards[i].addEventListener('click', (evt) => {
                 if (evt.target.getAttribute("color") === 'blue') {
@@ -18,11 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 evt.target.style.color = "#FFEDED";
                 
-                socket.emit('update game', {
-                    "token": token,
-                    "id": i,
-                    "color": evt.target.style.backgroundColor
-                })
+                if (!window.location.href.includes("spy")) {
+                    socket.emit('update game', {
+                        "token": token,
+                        "id": i,
+                        "color": evt.target.style.backgroundColor
+                    })
+                }
             })
         } 
     }

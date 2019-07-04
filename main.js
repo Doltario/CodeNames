@@ -14,8 +14,18 @@ var router = express.Router();
 // Application routes
 router.route('/game/:token').get(require('./routes/game'))
 router.route('/game/:token/admin').get(require('./routes/game'))
+router.route('/game/:token/spy').get(require('./routes/game'))
 router.route('/').get((req, res) => {
     res.render('home')
+})
+
+// A changer
+app.post("/", (req, res) => {
+    console.log(req.body)
+    // if(req.body.perso == "admin"){
+    //     res.redirect('/create');
+    // }
+    // res.render('home')
 })
  
 // API routes
@@ -23,6 +33,7 @@ router.route('/create').get(require('./routes/create'))
 
 app.use(router)
 app.use(express.static('public'))
+app.use(express.urlencoded())
 app.set('view engine', 'pug')
 
 io.on('connection', function(socket) {

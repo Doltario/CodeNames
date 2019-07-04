@@ -93,7 +93,7 @@ module.exports = async (req, res) => {
         grid: grid
     })
 
-    db.models.Game.find({}, null, { sort: { _id: -1 }, limit: 1}, function (err, doc) {
+    db.models.Game.find({}, null, { sort: { _id: -1 }, limit: 1}, async function (err, doc) {
         if (err) return handleError(err)
 
         // console.log(doc.length)
@@ -105,10 +105,12 @@ module.exports = async (req, res) => {
             game.token = 1  
         }
 
-        game.save().catch(err => {
+        await game.save().catch(err => {
             console.error(err);
         });
+        
+        res.redirect('/game/' + game.token + '/admin');
     });
 
-    res.json({grid : grid});   
+       
 }
