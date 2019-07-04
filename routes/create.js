@@ -1,7 +1,7 @@
 const words = require('../words.json')
 const db = require('../db');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
 
     res.setHeader('Access-Control-Allow-Origin', '*');
     var wordsList = [],
@@ -90,19 +90,25 @@ module.exports = (req, res) => {
     mainProcess();
 
     var game = new db.models.Game({
-        token: 4,
         grid: grid
     })
-    
-    // game.save()
 
-
-    db.models.Game.find({}, null, { sort: { _id: -1 }, limit: 1}, function (err, docs) {
+    db.models.Game.find({}, null, { sort: { _id: -1 }, limit: 1}, function (err, doc) {
         if (err) return handleError(err)
 
-        console.log(docs)
+        // console.log(doc.length)
+        // console.log(typeof doc)
+
+        if (doc.length) {
+            game.token = doc[0].token + 1  
+        } else {
+            game.token = 1  
+        }
+
+        game.save().catch(err => {
+            console.error(err);
+        });
     });
 
-    res.json({grid : grid});
-    
+    res.json({grid : grid});   
 }

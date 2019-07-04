@@ -1,12 +1,13 @@
 const express = require('express')
 const path = require('path')
 
-const db = require('./db');
+const db = require('./db')
+var app = express()
+const http = require('http').createServer(app)
+const io = require('socket.io')(http)
 
 var hostname = 'localhost'; 
 var port = process.env.PORT || 3000; 
- 
-var app = express(); 
 
 var router = express.Router(); 
 
@@ -23,8 +24,14 @@ app.use(router)
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 
+io.on('connection', function(socket){
+    socket.on('update game', function(data){
+        io.emit('update game', data)
+    })
+})
+
 db.connectDb().then(async () => {
-    app.listen(port, () =>
+    http.listen(port, () =>
         console.log(`App listening on port ${port}!`),
     );
 });

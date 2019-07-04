@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-var mongoDB = process.env.MONGODB_URI || 'mongodb://127.0.0.1/codeName'
+var mongoDB = process.env.MONGODB_URI || 'mongodb://localhost:27017/codeName'
 
 const connectDb = () => {
     return mongoose.connect(process.env.DATABASE_URL || mongoDB, { useNewUrlParser: true });
