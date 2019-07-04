@@ -13,6 +13,7 @@ var router = express.Router();
 
 // Application routes
 router.route('/game/:token').get(require('./routes/game'))
+router.route('/game/:token/admin').get(require('./routes/game'))
 router.route('/').get((req, res) => {
     res.render('home')
 })
@@ -24,9 +25,14 @@ app.use(router)
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
+
+    socket.on('begin', function (room) {
+        socket.join(room)
+    })
+
     socket.on('update game', function(data){
-        io.emit('update game', data)
+        socket.broadcast.to(data.token).emit('update tab', data)
     })
 })
 

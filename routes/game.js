@@ -7,8 +7,6 @@ module.exports = async (req, res) => {
     await db.models.Game.findOne({ token: token }, function (err, game) {
         if (err) return handleError(err)
 
-        grid = game
+        res.render('game', { game: game })
     });
-
-    res.render('game', { grid: grid })
 }
